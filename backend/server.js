@@ -1,12 +1,16 @@
 const express = require("express")
+const userRouter = require("./routes/user.routes")
+const todoRouter = require("./routes/todo.routes")
 const cors = require("cors")
 const app = express()
+
 app.use(cors())
+app.use(express.json())
+app.use('/api', userRouter)
+app.use('/api', todoRouter)
 
-app.get("/api", (req,res)=>{
-    return res.json({message:'Hello from backend'})
-})
 
-app.listen(8081,()=>{
-    console.log('listening')
+
+app.listen(process.env.PORT || 8000,()=>{
+    console.log('started server')
 })

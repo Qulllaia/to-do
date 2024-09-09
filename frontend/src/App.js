@@ -1,18 +1,70 @@
 import React, {useEffect, useState} from "react";
 
 function App() {
-  const [data, setData] = useState(null);
+  const [userID, setUserID] = useState(0);
+  const [data, setData] = useState([]);
+  const [toDoData, setToDoData] = useState({});
 
   useEffect(() => {
-    fetch('http://localhost:8081/api')
-    .then(res => res.json())
-    .then(data=>setData(data))
-    .catch(e=>console.log(e))
-    
-  }, []);
+    if(userID > 0){
+      fetch("http://localhost:8000/api/todo",{method: "post",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+      
+        body: JSON.stringify(toDoData)
+      }).then(res=>console.log(res))
+    }
+
+  }, [toDoData]);
+  useEffect(() => {
+    if(userID > 0){
+      fetch(`http://localhost:8000/api/todo?user_id=${userID}`)
+      .then(res => res.json())
+      .then(data=>setData(data))
+      .catch(e=>console.log(e))
+    }
+  }, [toDoData,userID]);
+  const submitHandler = (e) =>{
+    e.preventDefault()
+    // const formElement = 
+    const form = new FormData(e.target)
+    setToDoData({
+      text: form.get('todo'),
+      user_id: 2
+    })
+  }
+  const submitHandlerUserID = (e) =>{
+    e.preventDefault()
+    // const formElement = 
+    const form = new FormData(e.target)
+    setUserID(form.get('userID'))
+  }
   return (
     <div className="App">
-      {data ? <h1> {data.message} </h1> : <h1>Loading</h1>}
+        <h1>Введите ID пользователя</h1>
+        <form onSubmit={submitHandlerUserID}>
+            <input name="userID" placeholder="Добавьте дело"></input>
+            <button type="submit">Добавить дело</button>
+        </form>
+
+      {userID > 0 ? 
+        <>
+          <h1>Добавить дела для пользователя с id 2:</h1>
+          <form onSubmit={submitHandler}>
+            <input name="todo" placeholder="Добавьте дело"></input>
+            <button type="submit">Добавить дело</button>
+          </form>
+          <h1>Дела пользователя с id 2:</h1>
+          {data.map((data,index)=>(
+            <h2 key={index}>{data.text}</h2>
+          ))}
+        </>
+        :
+          <>
+          </>
+      }
     </div>
   );
 }
