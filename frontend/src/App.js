@@ -6,6 +6,7 @@ function App() {
   const [toDoData, setToDoData] = useState({});
 
   useEffect(() => {
+    console.log(toDoData)
     if(userID > 0){
       fetch("http://localhost:8000/api/todo",{method: "post",
         headers: {
@@ -14,25 +15,31 @@ function App() {
         },
       
         body: JSON.stringify(toDoData)
-      }).then(res=>console.log(res))
+      }).then(()=>getData())
+
     }
 
   }, [toDoData]);
   useEffect(() => {
     if(userID > 0){
-      fetch(`http://localhost:8000/api/todo?user_id=${userID}`)
+      getData()
+    }
+  }, [userID]);
+
+  const getData = () =>{
+    fetch(`http://localhost:8000/api/todo?user_id=${userID}`)
       .then(res => res.json())
       .then(data=>setData(data))
       .catch(e=>console.log(e))
-    }
-  }, [toDoData,userID]);
+  }
+
   const submitHandler = (e) =>{
     e.preventDefault()
     // const formElement = 
     const form = new FormData(e.target)
     setToDoData({
       text: form.get('todo'),
-      user_id: 2
+      user_id: Number(userID)
     })
   }
   const submitHandlerUserID = (e) =>{
@@ -45,7 +52,7 @@ function App() {
     <div className="App">
         <h1>Введите ID пользователя</h1>
         <form onSubmit={submitHandlerUserID}>
-            <input name="userID" placeholder="Добавьте дело"></input>
+            <input name="userID" placeholder="Добавьте дело" type="number"></input>
             <button type="submit">Добавить дело</button>
         </form>
 
