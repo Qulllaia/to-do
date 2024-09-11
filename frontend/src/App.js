@@ -1,6 +1,9 @@
 import React, {useEffect, useState} from "react";
+import { Outlet } from "react-router-dom";
+import './css/App.css'
+import { Nav } from "./components/Nav";
 
-function App() {
+function App(props) {
   const [userID, setUserID] = useState(0);
   const [data, setData] = useState([]);
   const [toDoData, setToDoData] = useState({});
@@ -48,30 +51,15 @@ function App() {
     const form = new FormData(e.target)
     setUserID(form.get('userID'))
   }
+  
+  
   return (
     <div className="App">
-        <h1>Введите ID пользователя</h1>
-        <form onSubmit={submitHandlerUserID}>
-            <input name="userID" placeholder="Добавьте дело" type="number"></input>
-            <button type="submit">Добавить дело</button>
-        </form>
-
-      {userID > 0 ? 
-        <>
-          <h1>Добавить дела для пользователя с id 2:</h1>
-          <form onSubmit={submitHandler}>
-            <input name="todo" placeholder="Добавьте дело"></input>
-            <button type="submit">Добавить дело</button>
-          </form>
-          <h1>Дела пользователя с id 2:</h1>
-          {data.map((data,index)=>(
-            <h2 key={index}>{data.text}</h2>
-          ))}
-        </>
-        :
-          <>
-          </>
-      }
+      <Nav/>
+      <main className="form-signin w-100 m-auto">
+        {props.children}
+        <Outlet/>
+      </main>
     </div>
   );
 }
