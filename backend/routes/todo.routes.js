@@ -1,10 +1,9 @@
-const Router = require('express')
-const router = new Router()
-const todoController = require('../controller/todo.controller')
+const Router = require("express");
+const router = new Router();
+const todoController = require("../controller/todo.controller");
 
-router.post('/todo', todoController.createToDo)
-router.get('/todo', todoController.getToDos)
+router.post("/create_todo", todoController.createToDo);
+router.post("/user_todo", todoController.getToDos);
+router.delete("/todo/:id", todoController.deleteTodo);
 
-
-
-module.exports = router
+module.exports = router;

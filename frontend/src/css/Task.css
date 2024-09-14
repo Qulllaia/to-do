@@ -1,0 +1,28 @@
+.todo {
+  border: 2px solid rgb(139, 139, 139);
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 2rem;
+  width: max-content;
+  display: flex;
+  flex-direction: row;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.btn-edit {
+  background: url(https://cdn-icons-png.flaticon.com/512/1159/1159633.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: none;
+}
+p,
+.btn-close,
+.btn-edit {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: 10px;
+}

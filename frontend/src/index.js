@@ -1,20 +1,21 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
-import {Login} from './pages/Login'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
-import {Home} from './pages/Home'
+import { Home } from "./pages/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import {createStore} from 'redux'
-import {Provider} from 'react-redux'
-import { reducer } from './store/userReducer';
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { reducer } from "./store/userReducer";
+import { ToDos } from "./pages/ToDos";
 
-const store = createStore(reducer)
+const store = createStore(reducer);
 
 const router = createBrowserRouter([
   {
     element: <App />,
-    children:[
+    children: [
       {
         path: "/",
         element: <Home />,
@@ -27,11 +28,14 @@ const router = createBrowserRouter([
         path: "/login",
         element: <Login />,
       },
-    ]
-  }
-]
-);
-const root = ReactDOM.createRoot(document.getElementById('root'));
+      {
+        path: "/todos",
+        element: <ToDos />,
+      },
+    ],
+  },
+]);
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -39,4 +43,3 @@ root.render(
     </Provider>
   </React.StrictMode>
 );
-
