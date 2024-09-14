@@ -9,8 +9,8 @@ const ModalCreateToDo = ({ setNewToDo, setIsModalOpen }) => {
     const formData = new FormData(event.target);
     setNewToDo({
       text: formData.get("task"),
-      "time-start": formData.get("time-start"),
-      "time-end": formData.get("time-end"),
+      time_start: formData.get("time-start"),
+      time_end: formData.get("time-end"),
     });
     setIsModalOpen(false);
   };

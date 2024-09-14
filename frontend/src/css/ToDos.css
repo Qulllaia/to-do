@@ -1,7 +1,49 @@
 .btn {
   width: 200px;
-  margin-bottom: 20px;
+  height: 50px;
 }
 .todo-list {
   margin-inline: 10px;
+}
+.day-hours {
+  display: flex;
+  flex-direction: row;
+}
+.hours {
+  margin-left: 0;
+  flex: 1;
+  margin-right: 1px;
+  background-color: rgb(240, 240, 240);
+  padding-left: 2px;
+  border-radius: 5px;
+}
+.controls {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 10px;
+}
+.month {
+  font-size: 0.75rem;
+  margin: 0;
+  height: fit-content;
+}
+.calendar {
+  display: flex;
+  flex-direction: column;
+}
+.days {
+  display: flex;
+  flex-direction: row;
+}
+.day {
+  background-color: rgba(209, 209, 209, 0.413);
+  margin-right: 10px;
+  text-align: center;
+  line-height: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+}
+.day:hover {
+  background-color: rgba(209, 209, 209, 0.671);
 }

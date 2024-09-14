@@ -1,28 +1,56 @@
 .todo {
-  border: 2px solid rgb(139, 139, 139);
-  border-radius: 5px;
-  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.todo-line {
+  margin: 0;
+  color: rgba(255, 34, 0);
+  background-color: rgba(255, 34, 0, 0.536);
+  height: 1rem;
+}
+.todo-interaction {
   font-size: 2rem;
-  width: max-content;
   display: flex;
   flex-direction: row;
   margin-top: 1rem;
-  margin-bottom: 1rem;
 }
 .btn-edit {
   background: url(https://cdn-icons-png.flaticon.com/512/1159/1159633.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
-  width: 2.25rem;
-  height: 2.25rem;
+  padding: 0;
+  border: none;
+}
+.btn-close {
+  background: url(https://cdn-icons-png.flaticon.com/512/2961/2961937.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
   padding: 0;
   border: none;
 }
 p,
 .btn-close,
-.btn-edit {
+.btn-edit,
+.input-edit {
   margin-top: auto;
   margin-bottom: auto;
-  margin-left: 10px;
+}
+p,
+.input-edit {
+  font-size: 1.5rem;
+}
+.btn-close,
+.btn-edit {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin-left: 1rem;
+}
+
+.input-edit {
+  width: max-content;
+  border: none;
+  padding: 0;
 }

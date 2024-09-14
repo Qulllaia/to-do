@@ -42,33 +42,52 @@ export const ToDos = () => {
       .then((res) => res.json())
       .then((data) => data);
     if (fetchResult.length === 0) {
-      // console.log(fetchResult);
       return [];
     } else {
-      // console.log(fetchResult);
       return [...fetchResult];
     }
   };
 
   return (
     <div className="todo-list">
-      <button
-        className="btn btn-primary"
-        type="button"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Add ToDo
-      </button>
-
-      {todos.map((data, index) => (
-        <Task
-          key={index}
-          text={data.text}
-          id={data.id}
-          setTodos={setTodos}
-          getUserDataAPI={getUserDataAPI}
-        ></Task>
-      ))}
+      <div className="controls">
+        <button
+          className="btn btn-primary"
+          type="button"
+          onClick={() => setIsModalOpen(true)}
+        >
+          Add ToDo
+        </button>
+        <div className="calendar">
+          <p className="month">Месяц</p>
+          <div className="days">
+            {[...Array(31)].map((_, index) => (
+              <div className="day">{index}</div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <div>
+        <div className="day-hours">
+          {[...Array(24)].map((_, index) => (
+            <>
+              <p className="hours">{index}</p>
+              <hr className="separete-line"></hr>
+            </>
+          ))}
+        </div>
+        {todos.map((data, index) => (
+          <Task
+            key={index}
+            text={data.text}
+            id={data.id}
+            timeStart={data.time_start}
+            timeToEnd={data.time_to_finish}
+            setTodos={setTodos}
+            getUserDataAPI={getUserDataAPI}
+          ></Task>
+        ))}
+      </div>
 
       {isModalOpen ? (
         <ModalCreateToDo
