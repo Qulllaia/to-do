@@ -1,3 +1,15 @@
+.day-hours {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100vh;
+}
+.hours {
+  margin-top: 9rem;
+  margin-bottom: 0;
+}
 .todo {
   display: flex;
   flex-direction: column;
@@ -41,6 +53,7 @@ p,
 p,
 .input-edit {
   font-size: 1.5rem;
+  background-color: transparent;
 }
 .btn-close,
 .btn-edit {
@@ -53,4 +66,7 @@ p,
   width: max-content;
   border: none;
   padding: 0;
+}
+.input-edit {
+  outline-width: 0px;
 }

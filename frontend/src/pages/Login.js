@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../server";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,20 +10,11 @@ export const Login = () => {
 
   const submitEvent = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:8000/api/login", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-    }).then((res) => {
+    loginUser(email, password).then((res) => {
       if (res.status === 200) navigate("/");
     });
   };
+
   return (
     <form className="callout text-center" onSubmit={submitEvent}>
       <h1 className="h3 mb-3 fw-normal">Please sign in</h1>

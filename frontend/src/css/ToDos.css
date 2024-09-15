@@ -44,6 +44,19 @@
   height: 2rem;
   border-radius: 5px;
 }
+.selected-day {
+  background-color: rgba(18, 162, 13, 0.694);
+  margin-right: 10px;
+  text-align: center;
+  line-height: 2rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 5px;
+}
+
 .day:hover {
   background-color: rgba(209, 209, 209, 0.671);
+}
+.task-time {
+  margin-top: 2rem;
 }

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { registrateUser } from "../server";
 export const Registration = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -10,22 +10,7 @@ export const Registration = () => {
 
   const submitEvent = async (e) => {
     e.preventDefault();
-    fetch("http://localhost:8000/api/reg", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        name,
-        email,
-        password,
-      }),
-    })
-      .then((res) => console.log(res))
-      .finally(() => {
-        navigate("/login/");
-      });
+    registrateUser(name, email, password).then(() => navigate("/login/"));
   };
 
   return (

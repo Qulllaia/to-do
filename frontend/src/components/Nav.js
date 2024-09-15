@@ -2,23 +2,12 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { removeLogAction } from "../store/userReducer";
-
+import { logOut } from "../server";
 export const Nav = () => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const logOut = async () => {
-    fetch("http://localhost:8000/api/logout", {
-      method: "post",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    }).then(() => setIsLoggedIn(false));
-  };
 
   const deleteLogUser = () => {
     dispatch(removeLogAction({}));
@@ -55,7 +44,7 @@ export const Nav = () => {
                   to="/login"
                   onClick={() => {
                     deleteLogUser();
-                    logOut();
+                    logOut().then(() => setIsLoggedIn(false));
                   }}
                 >
                   Logout
