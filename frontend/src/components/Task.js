@@ -1,22 +1,30 @@
 import React, { useState, useEffect } from "react";
 import "../css/Task.css";
-import { updateTask, getUserDataAPI, deleteTask } from "../server";
-const Task = ({ text, id, setTodos, user, timeStart, timeToEnd }) => {
+import { updateTask, deleteTask } from "../server";
+const Task = ({
+  text,
+  id,
+  setTodos,
+  toDos,
+  user,
+  timeStart,
+  timeToEnd,
+  localDay,
+}) => {
   const [taskText, setTaskText] = useState(text);
   const [isEditing, setIsEditing] = useState(false);
   const fullDay = 24 * 60 * 60 * 1000;
   const documentLimit =
     document.getElementsByClassName("day-hours")[0].offsetWidth / 16;
-
   useEffect(() => {
-    console.log(document.getElementsByClassName("day-hours")[0].offsetWidth);
-  }, []);
-
+    setTaskText(text);
+  }, [toDos]);
   return (
     <div
       className="todo"
       style={{
-        "margin-left": `${(documentLimit * timeStart) / fullDay}rem`,
+        //Ёбанный костыль и подгонка. Переделать нахуй надо
+        marginLeft: `${(documentLimit * timeStart) / fullDay - 0.6}rem`,
       }}
     >
       <div className="todo-interaction">
@@ -39,7 +47,9 @@ const Task = ({ text, id, setTodos, user, timeStart, timeToEnd }) => {
         />
         <button
           className="btn-close"
-          onClick={() => deleteTask(id, user).then((res) => setTodos([...res]))}
+          onClick={() =>
+            deleteTask(id, user, localDay).then((res) => setTodos([...res]))
+          }
         />
       </div>
       <hr

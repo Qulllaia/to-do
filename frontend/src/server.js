@@ -1,5 +1,7 @@
-export const postNewToDo = async (newToDo, user) => {
+export const postNewToDo = async (newToDo, user, localDate) => {
   newToDo.user_id = user.id;
+  newToDo.date = localDate;
+  console.log(newToDo);
   await fetch("http://localhost:8000/api/create_todo", {
     method: "post",
     headers: {
@@ -9,15 +11,18 @@ export const postNewToDo = async (newToDo, user) => {
   }).then((res) => {
     console.log(res);
   });
-  return await getUserDataAPI(user);
+  return await getUserDataAPI(user, localDate);
 };
-export const getUserDataAPI = async (user) => {
+export const getUserDataAPI = async (user, localDate) => {
   const fetchResult = await fetch("http://localhost:8000/api/user_todo", {
     method: "post",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(user),
+    body: JSON.stringify({
+      user_id: user.id,
+      date: localDate,
+    }),
   })
     .then((res) => res.json())
     .then((data) => data);
@@ -63,11 +68,11 @@ export const updateTask = (id, text) => {
     body: JSON.stringify({ id, text }),
   }).then((res) => console.log(res));
 };
-export const deleteTask = async (id, user) => {
+export const deleteTask = async (id, user, localDate) => {
   await fetch(`http://localhost:8000/api/todo/${id}`, {
     method: "delete",
   });
-  return await getUserDataAPI(user);
+  return await getUserDataAPI(user, localDate);
 };
 export const logOut = async () => {
   fetch("http://localhost:8000/api/logout", {

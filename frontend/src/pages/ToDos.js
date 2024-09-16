@@ -4,53 +4,69 @@ import "../css/ToDos.css";
 import ModalCreateToDo from "../components/ModalCreateToDo";
 import Task from "../components/Task";
 import { postNewToDo, getUserDataAPI } from "../server";
+import DateControllers from "../components/DateControllers";
 
 export const ToDos = () => {
+  const localDate = new Date().toLocaleDateString();
   const user = useSelector((store) => store.user);
   const [todos, setTodos] = useState([]);
   const [newToDo, setNewToDo] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState();
-  const [selectedDay, setSelectedDay] = useState();
+  const [selectedDay, setSelectedDay] = useState(
+    Number(localDate.split(".")[0])
+  );
+  const [monthNumber, setMonthNumber] = useState(
+    Number(localDate.split(".")[1])
+  );
 
   useEffect(() => {
-    getUserDataAPI(user).then((res) => setTodos([...res]));
-    console.log(typeof todos);
-  }, [user]);
+    getUserDataAPI(
+      user,
+      `${
+        selectedDay +
+        "." +
+        (monthNumber.toString().length >= 2 ? monthNumber : "0" + monthNumber) +
+        "." +
+        localDate.slice(6)
+      }`
+    ).then((res) => setTodos([...res]));
+    console.log(todos);
+  }, [user, selectedDay, monthNumber]);
 
   useEffect(() => {
     if (newToDo !== null) {
-      postNewToDo(newToDo, user).then((res) => setTodos([...res]));
+      postNewToDo(
+        newToDo,
+        user,
+        `${
+          selectedDay +
+          "." +
+          (monthNumber.toString().length >= 2
+            ? monthNumber
+            : "0" + monthNumber) +
+          "." +
+          localDate.slice(6)
+        }`
+      ).then((res) => setTodos([...res]));
     }
   }, [newToDo]);
 
   return (
     <div className="todo-list">
-      <div className="controls">
-        <button
-          className="btn btn-primary"
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-        >
-          Add ToDo
-        </button>
-        <div className="calendar">
-          <p className="month">Сентябрь</p>
-          <div className="days">
-            {[...Array(31)].map((_, index) => (
-              <div
-                className={`${index === selectedDay ? "selected-" : ""}day`}
-                onClick={() => setSelectedDay(index)}
-              >
-                {index}
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <DateControllers
+        setIsModalOpen={setIsModalOpen}
+        selectedDay={selectedDay}
+        setSelectedDay={setSelectedDay}
+        monthNumber={monthNumber}
+        setMonthNumber={setMonthNumber}
+        localDate={localDate}
+      />
       <div className="time-table-content">
         <div className="day-hours">
           {[...Array(24)].map((_, index) => (
-            <p className="hours">{index}</p>
+            <p key={index} className="hours">
+              {index}
+            </p>
           ))}
         </div>
         <div className="task-time">
@@ -62,7 +78,17 @@ export const ToDos = () => {
               timeStart={data.time_start}
               timeToEnd={data.time_to_finish}
               setTodos={setTodos}
+              toDos={todos}
               user={user}
+              localDay={`${
+                selectedDay +
+                "." +
+                (monthNumber.toString().length >= 2
+                  ? monthNumber
+                  : "0" + monthNumber) +
+                "." +
+                localDate.slice(6)
+              }`}
             ></Task>
           ))}
         </div>
